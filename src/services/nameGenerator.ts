@@ -17,43 +17,76 @@ class NameGeneratorService {
   private baseUrl = "https://api-inference.huggingface.co/models";
 
   async generateNames(params: GenerateNamesParams): Promise<GeneratedName[]> {
+    console.log("Generating names with params:", params);
+    
     try {
       // Create a comprehensive prompt for name generation
       const prompt = this.createPrompt(params);
+      console.log("Generated prompt:", prompt);
       
-      // Use a text generation model for creative naming
-      const response = await fetch(`${this.baseUrl}/gpt2`, {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${this.apiKey}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          inputs: prompt,
-          parameters: {
-            max_new_tokens: 200,
-            temperature: 0.8,
-            do_sample: true,
-            num_return_sequences: 1,
-          },
-        }),
-      });
+      // Try multiple models for better results
+      const models = [
+        "microsoft/DialoGPT-medium",
+        "gpt2",
+        "distilgpt2"
+      ];
+      
+      let response;
+      let modelUsed = "";
+      
+      for (const model of models) {
+        try {
+          modelUsed = model;
+          response = await fetch(`${this.baseUrl}/${model}`, {
+            method: "POST",
+            headers: {
+              "Authorization": `Bearer ${this.apiKey}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              inputs: prompt,
+              parameters: {
+                max_new_tokens: 150,
+                temperature: 0.9,
+                do_sample: true,
+                num_return_sequences: 1,
+                pad_token_id: 50256,
+              },
+            }),
+          });
+          
+          console.log(`Trying model ${model}, response status:`, response.status);
+          
+          if (response.ok) {
+            break;
+          } else {
+            const errorText = await response.text();
+            console.log(`Model ${model} failed:`, errorText);
+          }
+        } catch (error) {
+          console.log(`Model ${model} error:`, error);
+          continue;
+        }
+      }
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+      if (!response || !response.ok) {
+        console.log("All models failed, using fallback names");
+        return this.getFallbackNames(params);
       }
 
       const data = await response.json();
+      console.log("API response:", data);
       
       // Extract and clean up the generated names
       const generatedText = data[0]?.generated_text || "";
-      const names = this.extractNames(generatedText, params);
+      console.log("Generated text:", generatedText);
       
-      return names.slice(0, 12); // Return up to 12 names
+      const names = this.extractNames(generatedText, params);
+      console.log("Extracted names:", names);
+      
+      return names.length > 0 ? names.slice(0, 12) : this.getFallbackNames(params);
     } catch (error) {
       console.error("Error generating names:", error);
-      
-      // Fallback: return some creative names based on the input
       return this.getFallbackNames(params);
     }
   }
@@ -61,7 +94,8 @@ class NameGeneratorService {
   private createPrompt(params: GenerateNamesParams): string {
     const { description, industry, style, keywords } = params;
     
-    let prompt = `Generate creative business names for: ${description}`;
+    // Create a multilingual-friendly prompt
+    let prompt = `Create unique business names for: ${description}`;
     
     if (industry) {
       prompt += `\nIndustry: ${industry}`;
@@ -75,69 +109,80 @@ class NameGeneratorService {
       prompt += `\nKeywords: ${keywords.join(", ")}`;
     }
     
-    prompt += "\n\nCreative business names:\n1.";
+    prompt += "\n\nBusiness name suggestions:\n1.";
     
     return prompt;
   }
 
   private extractNames(text: string, params: GenerateNamesParams): GeneratedName[] {
+    console.log("Extracting names from text:", text);
+    
     // Try to extract names from the generated text
     const lines = text.split('\n');
     const names: GeneratedName[] = [];
     
     for (const line of lines) {
-      const cleaned = line.replace(/^\d+\.?\s*/, '').trim();
-      if (cleaned && cleaned.length > 2 && cleaned.length < 50) {
+      // Clean up the line and extract potential names
+      let cleaned = line.replace(/^\d+[\.\)\-\:]\s*/, '').trim();
+      cleaned = cleaned.replace(/^[\-\*\•]\s*/, '').trim();
+      
+      if (cleaned && cleaned.length > 2 && cleaned.length < 60) {
         // Clean up the name (remove extra punctuation, etc.)
-        const name = cleaned.replace(/[^\w\s&.-]/g, '').trim();
-        if (name && !names.some(n => n.name.toLowerCase() === name.toLowerCase())) {
+        const name = cleaned.replace(/[^\w\s&.\-']/g, '').trim();
+        if (name && name.length > 1 && !names.some(n => n.name.toLowerCase() === name.toLowerCase())) {
           names.push({ name, score: Math.random() });
+          if (names.length >= 12) break;
         }
       }
     }
     
-    // If we didn't get enough names, add some fallback names
-    if (names.length < 6) {
-      const fallbackNames = this.getFallbackNames(params);
-      names.push(...fallbackNames.slice(0, 12 - names.length));
-    }
-    
+    console.log("Extracted names count:", names.length);
     return names;
   }
 
   private getFallbackNames(params: GenerateNamesParams): GeneratedName[] {
     const { description, industry, keywords } = params;
+    console.log("Generating fallback names for:", params);
     
-    // Generate creative combinations based on input
-    const prefixes = ["Smart", "Pro", "Next", "Elite", "Prime", "Nova", "Apex", "Spark", "Flux", "Zen"];
-    const suffixes = ["Hub", "Lab", "Works", "Pro", "Studio", "Solutions", "Tech", "Dynamics", "Systems", "Group"];
-    const connectors = ["", ".", "&", "-", " "];
+    // Enhanced fallback names with multilingual support
+    const prefixes = ["Smart", "Pro", "Elite", "Prime", "Nova", "Apex", "Spark", "Quick", "Best", "Top", "Super", "Max"];
+    const suffixes = ["Hub", "Zone", "Pro", "Studio", "Works", "Lab", "Point", "Center", "Solutions", "Services", "Group", "Co"];
+    const connectors = ["", " ", "-", "&"];
     
     const names: GeneratedName[] = [];
     
-    // Use keywords if available
-    const baseWords = keywords && keywords.length > 0 
-      ? keywords 
-      : description.split(' ').filter(word => word.length > 3);
+    // Extract key words from description for multilingual support
+    const descWords = description.split(/\s+/).filter(word => 
+      word.length > 2 && !['the', 'and', 'for', 'with', 'मेरे', 'के', 'लिए', 'है', 'में'].includes(word.toLowerCase())
+    );
     
-    // Generate combinations
-    for (let i = 0; i < Math.min(6, prefixes.length); i++) {
+    // Use keywords if available, otherwise use description words
+    const baseWords = keywords && keywords.length > 0 ? keywords : descWords.slice(0, 3);
+    
+    // Generate creative combinations
+    for (let i = 0; i < Math.min(8, prefixes.length); i++) {
       const prefix = prefixes[i];
       const suffix = suffixes[i % suffixes.length];
       const connector = connectors[i % connectors.length];
       
       if (baseWords.length > 0) {
         const baseWord = baseWords[i % baseWords.length];
-        const capitalizedBase = baseWord.charAt(0).toUpperCase() + baseWord.slice(1).toLowerCase();
+        const capitalizedBase = this.capitalizeWord(baseWord);
+        
         names.push({ 
           name: `${prefix}${connector}${capitalizedBase}`, 
           score: Math.random() 
         });
-        names.push({ 
-          name: `${capitalizedBase}${connector}${suffix}`, 
-          score: Math.random() 
-        });
-      } else {
+        
+        if (names.length < 12) {
+          names.push({ 
+            name: `${capitalizedBase}${connector}${suffix}`, 
+            score: Math.random() 
+          });
+        }
+      }
+      
+      if (names.length < 12) {
         names.push({ 
           name: `${prefix}${connector}${suffix}`, 
           score: Math.random() 
@@ -145,12 +190,12 @@ class NameGeneratorService {
       }
     }
     
-    // Add some industry-specific names if industry is provided
-    if (industry) {
-      const industryWords = industry.split(' ');
+    // Add some industry-specific names
+    if (industry && names.length < 12) {
+      const industryWords = industry.split(' ').filter(word => word.length > 3);
       industryWords.forEach((word, index) => {
-        if (word.length > 3 && index < 3) {
-          const capitalizedWord = word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+        if (names.length < 12) {
+          const capitalizedWord = this.capitalizeWord(word);
           names.push({ 
             name: `${prefixes[index % prefixes.length]} ${capitalizedWord}`, 
             score: Math.random() 
@@ -159,7 +204,13 @@ class NameGeneratorService {
       });
     }
     
+    console.log("Generated fallback names:", names);
     return names.slice(0, 12);
+  }
+  
+  private capitalizeWord(word: string): string {
+    if (!word) return word;
+    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
   }
 }
 
