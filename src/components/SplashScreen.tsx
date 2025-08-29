@@ -12,24 +12,20 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsVisible(false);
-      setTimeout(onComplete, 500); // Wait for fade out animation
-    }, 2500); // Show splash for 2.5 seconds
+      setTimeout(onComplete, 300); // Wait for fade out animation
+    }, 2000); // Show splash for 2 seconds
 
     return () => clearTimeout(timer);
   }, [onComplete]);
 
-  if (!isVisible) {
-    return (
-      <div className="fixed inset-0 z-[100] bg-gradient-to-br from-background via-brand-surface to-background flex items-center justify-center animate-fade-out">
-        {/* Fade out animation */}
-      </div>
-    );
-  }
-
   return (
-    <div className="fixed inset-0 z-[100] bg-gradient-to-br from-background via-brand-surface to-background flex items-center justify-center">
+    <div 
+      className={`fixed inset-0 z-[100] bg-gradient-to-br from-background via-brand-surface to-background flex items-center justify-center transition-opacity duration-300 ${
+        isVisible ? 'opacity-100' : 'opacity-0'
+      }`}
+    >
       {/* Background gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-brand-gradient-from/20 via-brand-gradient-via/10 to-brand-gradient-to/20"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-brand-primary/20 via-brand-primary/10 to-brand-secondary/20"></div>
       
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
@@ -42,7 +38,7 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
         {/* Logo container */}
         <div className="relative">
           {/* Pulsing glow effect */}
-          <div className="absolute inset-0 rounded-full bg-gradient-to-r from-brand-gradient-from to-brand-gradient-to blur-xl opacity-50 animate-pulse"></div>
+          <div className="absolute inset-0 rounded-full bg-gradient-to-r from-brand-primary to-brand-secondary blur-xl opacity-50 animate-pulse"></div>
           
           {/* Logo */}
           <div className="relative w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border border-white/20 flex items-center justify-center animate-scale-in">
@@ -50,7 +46,13 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
               src="/lovable-uploads/6eb62808-1298-4053-ae35-52e6ec22dde5.png" 
               alt="SmartName AI" 
               className="w-14 h-14 floating"
+              onError={(e) => {
+                // Fallback if image fails to load
+                e.currentTarget.style.display = 'none';
+                e.currentTarget.nextElementSibling?.classList.remove('hidden');
+              }}
             />
+            <Sparkles className="w-14 h-14 text-brand-primary hidden" />
           </div>
         </div>
 
@@ -74,7 +76,7 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
         {/* Progress bar */}
         <div className="w-64 mx-auto animate-fade-in" style={{ animationDelay: '1.2s' }}>
           <div className="h-1 bg-white/10 rounded-full overflow-hidden">
-            <div className="h-full bg-gradient-to-r from-brand-gradient-from to-brand-gradient-to rounded-full animate-pulse w-full transform origin-left transition-all duration-2000"></div>
+            <div className="h-full bg-gradient-to-r from-brand-primary to-brand-secondary rounded-full animate-pulse w-full transform origin-left transition-all duration-2000"></div>
           </div>
         </div>
       </div>

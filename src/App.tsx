@@ -22,8 +22,10 @@ const App = () => {
   const [isAppReady, setIsAppReady] = useState(false);
 
   useEffect(() => {
+    console.log('App mounted, initializing...');
     // Simulate app initialization
     const initTimer = setTimeout(() => {
+      console.log('App ready');
       setIsAppReady(true);
     }, 1000);
 
@@ -31,8 +33,11 @@ const App = () => {
   }, []);
 
   const handleSplashComplete = () => {
+    console.log('Splash complete, showing main app');
     setShowSplash(false);
   };
+
+  console.log('App render - showSplash:', showSplash, 'isAppReady:', isAppReady);
 
   if (showSplash || !isAppReady) {
     return <SplashScreen onComplete={handleSplashComplete} />;
