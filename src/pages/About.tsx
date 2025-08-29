@@ -27,10 +27,10 @@ const About = () => {
   ];
 
   const stats = [
-    { number: '50,000+', label: 'Names Generated' },
-    { number: '5,000+', label: 'Happy Users' },
-    { number: '50+', label: 'Industries Covered' },
-    { number: '99.9%', label: 'Uptime' }
+    { number: '10K+', label: 'Names Generated' },
+    { number: '1K+', label: 'Happy Users' },
+    { number: '25+', label: 'Industries Covered' },
+    { number: '24/7', label: 'Available' }
   ];
 
   return (
@@ -44,6 +44,19 @@ const About = () => {
           <p className="text-xl text-white/70 max-w-3xl mx-auto leading-relaxed">
             We're on a mission to help entrepreneurs and businesses find the perfect name 
             that captures their vision and resonates with their audience.
+          </p>
+        </div>
+
+        {/* Trademark Disclaimer */}
+        <div className="card-glass p-6 mb-12 border-l-4 border-yellow-400">
+          <h3 className="text-lg font-bold text-white mb-3 flex items-center">
+            <span className="w-2 h-2 bg-yellow-400 rounded-full mr-2"></span>
+            Important Legal Notice
+          </h3>
+          <p className="text-white/80 leading-relaxed">
+            <strong>Trademark Disclaimer:</strong> SmartName AI generates name suggestions 
+            based on your input but does not conduct trademark searches. You are solely 
+            responsible for verifying the legal availability of any names before commercial use.
           </p>
         </div>
 

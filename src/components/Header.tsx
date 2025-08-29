@@ -22,7 +22,7 @@ const Header = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3">
             <img 
-              src="/lovable-uploads/49631b89-7a49-4692-adff-2bdc9d648da5.png" 
+              src="/lovable-uploads/6eb62808-1298-4053-ae35-52e6ec22dde5.png" 
               alt="SmartName AI" 
               className="w-8 h-8"
             />

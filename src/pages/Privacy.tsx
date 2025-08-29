@@ -126,7 +126,7 @@ const Privacy = () => {
             please contact our privacy team.
           </p>
           <div className="space-y-2 text-white/70">
-            <p><strong>Email:</strong> privacy@smartnameai.app</p>
+            <p><strong>Email:</strong> hello@socilet.com</p>
             <p><strong>Response Time:</strong> Within 24-48 hours</p>
           </div>
         </div>

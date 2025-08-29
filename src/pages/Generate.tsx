@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Sparkles, Wand2, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -80,6 +79,15 @@ const Generate = () => {
           <p className="text-white/70 max-w-2xl mx-auto">
             Describe your business and get AI-powered name suggestions instantly
           </p>
+        </div>
+
+        {/* Trademark Disclaimer */}
+        <div className="max-w-4xl mx-auto mb-8">
+          <div className="card-glass p-4 border-l-4 border-yellow-400">
+            <p className="text-white/80 text-sm">
+              <strong>⚠️ Important:</strong> Generated names are suggestions only. Please verify trademark availability before commercial use.
+            </p>
+          </div>
         </div>
 
         <div className="max-w-4xl mx-auto mb-12">
