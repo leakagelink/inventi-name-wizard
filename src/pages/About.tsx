@@ -27,8 +27,8 @@ const About = () => {
   ];
 
   const stats = [
-    { number: '10K+', label: 'Names Generated' },
-    { number: '1K+', label: 'Happy Users' },
+    { number: 'Thousands', label: 'Names Generated' },
+    { number: 'Hundreds', label: 'Happy Users' },
     { number: '25+', label: 'Industries Covered' },
     { number: '24/7', label: 'Available' }
   ];
@@ -44,19 +44,6 @@ const About = () => {
           <p className="text-xl text-white/70 max-w-3xl mx-auto leading-relaxed">
             We're on a mission to help entrepreneurs and businesses find the perfect name 
             that captures their vision and resonates with their audience.
-          </p>
-        </div>
-
-        {/* Trademark Disclaimer */}
-        <div className="card-glass p-6 mb-12 border-l-4 border-yellow-400">
-          <h3 className="text-lg font-bold text-white mb-3 flex items-center">
-            <span className="w-2 h-2 bg-yellow-400 rounded-full mr-2"></span>
-            Important Legal Notice
-          </h3>
-          <p className="text-white/80 leading-relaxed">
-            <strong>Trademark Disclaimer:</strong> SmartName AI generates name suggestions 
-            based on your input but does not conduct trademark searches. You are solely 
-            responsible for verifying the legal availability of any names before commercial use.
           </p>
         </div>
 
@@ -117,13 +104,26 @@ const About = () => {
         </div>
 
         {/* Technology */}
-        <div className="card-glass p-8 text-center">
+        <div className="card-glass p-8 mb-8 text-center">
           <Globe className="w-12 h-12 text-brand-primary mx-auto mb-4" />
           <h2 className="text-3xl font-bold text-white mb-4">Powered by Advanced AI</h2>
           <p className="text-white/80 text-lg leading-relaxed max-w-3xl mx-auto">
             SmartName AI leverages cutting-edge language models and machine learning algorithms 
             to understand your business context and generate names that are not only creative 
             but also strategically sound for your market positioning.
+          </p>
+        </div>
+
+        {/* Important Legal Notice - Single Instance */}
+        <div className="card-glass p-6 border-l-4 border-yellow-400">
+          <h3 className="text-lg font-bold text-white mb-3 flex items-center">
+            <span className="w-2 h-2 bg-yellow-400 rounded-full mr-2"></span>
+            Important Legal Notice
+          </h3>
+          <p className="text-white/80 leading-relaxed">
+            <strong>Trademark Disclaimer:</strong> SmartName AI generates name suggestions 
+            based on your input but does not conduct trademark searches. You are solely 
+            responsible for verifying the legal availability of any names before commercial use.
           </p>
         </div>
       </div>

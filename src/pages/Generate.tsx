@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Sparkles, Wand2, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -81,7 +82,7 @@ const Generate = () => {
           </p>
         </div>
 
-        {/* Trademark Disclaimer */}
+        {/* Single Trademark Disclaimer */}
         <div className="max-w-4xl mx-auto mb-8">
           <div className="card-glass p-4 border-l-4 border-yellow-400">
             <p className="text-white/80 text-sm">
