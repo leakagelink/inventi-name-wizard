@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,7 +62,26 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				brand: {
+					gradient: {
+						from: 'hsl(var(--brand-gradient-from))',
+						to: 'hsl(var(--brand-gradient-to))',
+						via: 'hsl(var(--brand-gradient-via))'
+					},
+					primary: 'hsl(var(--brand-primary))',
+					secondary: 'hsl(var(--brand-secondary))',
+					surface: 'hsl(var(--brand-surface))',
+					glass: 'hsl(var(--brand-glass))'
 				}
+			},
+			backgroundImage: {
+				'gradient-brand': 'linear-gradient(135deg, hsl(var(--brand-gradient-from)) 0%, hsl(var(--brand-gradient-via)) 50%, hsl(var(--brand-gradient-to)) 100%)',
+				'gradient-hero': 'linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%)',
+				'gradient-card': 'linear-gradient(145deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)',
+			},
+			backdropBlur: {
+				glass: '20px',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -84,11 +104,31 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'fade-in': {
+					from: { opacity: '0', transform: 'translateY(20px)' },
+					to: { opacity: '1', transform: 'translateY(0)' }
+				},
+				'scale-in': {
+					from: { opacity: '0', transform: 'scale(0.95)' },
+					to: { opacity: '1', transform: 'scale(1)' }
+				},
+				'slide-up': {
+					from: { transform: 'translateY(100%)' },
+					to: { transform: 'translateY(0)' }
+				},
+				shimmer: {
+					'0%': { transform: 'translateX(-100%)' },
+					'100%': { transform: 'translateX(100%)' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'fade-in': 'fade-in 0.6s ease-out',
+				'scale-in': 'scale-in 0.3s ease-out',
+				'slide-up': 'slide-up 0.4s ease-out',
+				shimmer: 'shimmer 2s infinite'
 			}
 		}
 	},
