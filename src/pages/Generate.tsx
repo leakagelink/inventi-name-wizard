@@ -78,7 +78,7 @@ const Generate = () => {
             <span className="gradient-text">Generate Business Names</span>
           </h1>
           <p className="text-white/70 max-w-2xl mx-auto">
-            Describe your business in any language and get AI-powered name suggestions
+            Describe your business and get AI-powered name suggestions instantly
           </p>
         </div>
 
@@ -90,7 +90,7 @@ const Generate = () => {
                   Business Description *
                 </label>
                 <Textarea
-                  placeholder="अपने व्यापार का वर्णन करें / Describe your business / तुमचा व्यवसाय वर्णन करा"
+                  placeholder="Describe your business in detail... (e.g., A modern fitness app for yoga enthusiasts)"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   className="bg-white/5 border-white/10 text-white placeholder-white/50 min-h-[100px]"
@@ -140,7 +140,7 @@ const Generate = () => {
                   Keywords
                 </label>
                 <Input
-                  placeholder="Keywords separated by commas"
+                  placeholder="Enter keywords separated by commas (e.g., smart, tech, solutions)"
                   value={keywords}
                   onChange={(e) => setKeywords(e.target.value)}
                   className="bg-white/5 border-white/10 text-white placeholder-white/50"

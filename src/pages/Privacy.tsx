@@ -9,39 +9,39 @@ const Privacy = () => {
       title: 'Information We Collect',
       content: [
         'Business descriptions and naming preferences you provide',
-        'Usage analytics to improve our AI models',
-        'Device and browser information for security purposes',
-        'IP address for fraud prevention and analytics'
+        'Usage analytics to improve our name generation algorithms', 
+        'Device and browser information for security and optimization',
+        'General location data for analytics purposes only'
       ]
     },
     {
       icon: Lock,
       title: 'How We Protect Your Data',
       content: [
-        'End-to-end encryption for all data transmission',
-        'Secure cloud storage with industry-standard protocols',
+        'Industry-standard encryption for all data transmission',
+        'Secure cloud storage with regular backups',
         'Regular security audits and vulnerability assessments',
-        'Limited access to personal data by authorized personnel only'
+        'Limited access to data by authorized personnel only'
       ]
     },
     {
       icon: Eye,
-      title: 'How We Use Information',
+      title: 'How We Use Your Information',
       content: [
         'Generate personalized business name suggestions',
         'Improve our AI algorithms and user experience',
-        'Provide customer support when needed',
-        'Send important updates about our service (opt-in only)'
+        'Provide customer support when requested',
+        'Send service updates (with your consent only)'
       ]
     },
     {
       icon: UserCheck,
-      title: 'Your Rights',
+      title: 'Your Privacy Rights',
       content: [
         'Access and download your personal data',
         'Request deletion of your account and data',
-        'Opt-out of non-essential communications',
-        'Update or correct your information at any time'
+        'Control communication preferences',
+        'Update or correct your information anytime'
       ]
     }
   ];
@@ -56,7 +56,7 @@ const Privacy = () => {
             <span className="gradient-text">Privacy Policy</span>
           </h1>
           <p className="text-xl text-white/70 max-w-3xl mx-auto leading-relaxed">
-            Your privacy is our priority. Learn how we collect, use, and protect your information.
+            Your privacy matters to us. Learn how we collect, use, and protect your information.
           </p>
         </div>
 
@@ -71,16 +71,17 @@ const Privacy = () => {
         <div className="card-gradient p-8 mb-8">
           <h2 className="text-2xl font-bold text-white mb-4 flex items-center space-x-2">
             <Globe className="w-6 h-6 text-brand-primary" />
-            <span>Our Commitment to Privacy</span>
+            <span>Our Privacy Commitment</span>
           </h2>
           <p className="text-white/80 leading-relaxed mb-4">
-            At SmartName AI, we believe that privacy is a fundamental right. This Privacy Policy 
-            explains how we collect, use, disclose, and safeguard your information when you use 
-            our business name generation service.
+            SmartName AI is committed to protecting your privacy. This Privacy Policy explains 
+            how we collect, use, and safeguard your information when you use our business name 
+            generation service.
           </p>
           <p className="text-white/70 leading-relaxed">
-            By using SmartName AI, you agree to the collection and use of information in accordance 
-            with this policy. We will not use or share your information except as described in this policy.
+            By using SmartName AI, you agree to the collection and use of information as 
+            described in this policy. We only collect information necessary to provide 
+            our services effectively.
           </p>
         </div>
 
@@ -106,25 +107,14 @@ const Privacy = () => {
 
         {/* Data Retention */}
         <div className="card-gradient p-8 mb-8">
-          <h2 className="text-2xl font-bold text-white mb-4">Data Retention</h2>
+          <h2 className="text-2xl font-bold text-white mb-4">Data Retention Policy</h2>
           <p className="text-white/80 leading-relaxed mb-4">
-            We retain your personal information only for as long as necessary to provide our services 
-            and fulfill the purposes outlined in this privacy policy. When you delete your account, 
-            we will delete your personal data within 30 days.
+            We retain your personal information only as long as necessary to provide our services. 
+            When you delete your account, we remove your personal data within 30 days of your request.
           </p>
           <p className="text-white/70 leading-relaxed">
-            Some information may be retained for legal compliance, fraud prevention, or legitimate 
-            business purposes as required by law.
-          </p>
-        </div>
-
-        {/* International Users */}
-        <div className="card-glass p-6 mb-8">
-          <h2 className="text-xl font-bold text-white mb-4">International Users</h2>
-          <p className="text-white/70 leading-relaxed">
-            SmartName AI operates globally and complies with international privacy regulations 
-            including GDPR, CCPA, and other applicable privacy laws. Your data may be processed 
-            in countries other than your own, but always with the same level of protection.
+            Some anonymous usage data may be retained for service improvement and legal compliance 
+            as required by applicable laws.
           </p>
         </div>
 
@@ -132,12 +122,12 @@ const Privacy = () => {
         <div className="card-gradient p-8 text-center">
           <h2 className="text-2xl font-bold text-white mb-4">Questions About Privacy?</h2>
           <p className="text-white/80 leading-relaxed mb-6">
-            If you have any questions about this Privacy Policy or how we handle your data, 
-            please don't hesitate to contact us.
+            If you have questions about this Privacy Policy or how we handle your data, 
+            please contact our privacy team.
           </p>
           <div className="space-y-2 text-white/70">
-            <p><strong>Email:</strong> privacy@smartnameai.com</p>
-            <p><strong>Response Time:</strong> Within 48 hours</p>
+            <p><strong>Email:</strong> privacy@smartnameai.app</p>
+            <p><strong>Response Time:</strong> Within 24-48 hours</p>
           </div>
         </div>
       </div>
